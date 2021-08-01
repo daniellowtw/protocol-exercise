@@ -1,0 +1,28 @@
+syntax = "proto3";
+package service;
+option go_package = "github.com/daniellowtw/protocol-exercise/server/foopb";
+
+message StatelessRequest {
+  uint32 last_msg = 1;
+}
+
+message StatelessResponse {
+  uint32 msg = 1;
+}
+
+message StatefulRequest {
+  string client_id = 1;
+  bool is_reconnect = 2;
+  uint32 total_msg = 3;
+}
+
+message StatefulResponse {
+  uint32 msg = 1;
+  uint32 checksum = 2;
+}
+
+
+service Foo {
+  rpc Stateless (StatelessRequest) returns (stream StatelessResponse) {}
+  rpc Stateful (StatefulRequest) returns (stream StatefulResponse) {}
+}
